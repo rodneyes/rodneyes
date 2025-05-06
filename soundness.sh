@@ -17,8 +17,16 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # 第8步：加载 cargo 环境变量并安装 soundnessup
 echo "正在加载 cargo 环境变量并安装 soundnessup..."
+source ~/.bashrc  # 原教程方式
 source "$HOME/.cargo/env"  # 确保 cargo/bin 在 PATH 中
 export PATH="$HOME/.cargo/bin:$PATH"  # 再次确保路径正确
+
+# 5. 检查 soundnessup 是否可执行
+if ! command -v soundnessup &> /dev/null; then
+    echo "错误：soundnessup 未找到！尝试重新安装..."
+    curl -sSL https://raw.githubusercontent.com/soundnesslabs/soundness-layer/main/soundnessup/install | bash
+    export PATH="$PATH:$HOME/.local/bin"  # 某些情况下 soundnessup 会安装到这里
+fi
 soundnessup install
 
 # 第9步：更新 soundnessup
