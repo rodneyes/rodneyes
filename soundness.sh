@@ -7,6 +7,16 @@ set -e
 echo "正在更新和升级系统软件包..."
 sudo apt update && sudo apt upgrade -y   
 
+# 检查并安装 expect
+echo "检查是否安装 expect..."
+if ! command -v expect &> /dev/null
+then
+    echo "expect 未安装，正在安装..."
+    sudo apt install -y expect
+else
+    echo "expect 已安装"
+fi
+
 # 第6步：安装 soundness-layer
 echo "正在安装 soundness-layer..."
 curl -sSL https://raw.githubusercontent.com/soundnesslabs/soundness-layer/main/soundnessup/install | bash
