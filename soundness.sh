@@ -5,7 +5,7 @@ set -e
 
 # 第5步：更新和升级系统软件包
 echo "正在更新和升级系统软件包..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y   
 
 # 第6步：安装 soundness-layer
 echo "正在安装 soundness-layer..."
@@ -15,20 +15,9 @@ curl -sSL https://raw.githubusercontent.com/soundnesslabs/soundness-layer/main/s
 echo "正在安装 Rust..."
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-# 第8步：加载 Rust 环境变量并安装 soundnessup
-echo "正在加载 Rust 环境变量..."
-source $HOME/.cargo/env
-
-# 确保 soundnessup 在 PATH 中
-echo "正在更新 PATH 环境变量以包括 soundnessup..."
-echo 'export PATH=$PATH:/home/codespace/.soundness/bin/' >> ~/.bashrc
-source ~/.bashrc
-
-# 检查 soundnessup 是否已成功安装
-which soundnessup || { echo "soundnessup 没有找到，请检查安装"; exit 1; }
-
-# 安装 soundnessup
-echo "正在安装 soundnessup..."
+# 第8步：加载 bashrc 并安装 soundnessup
+echo "正在加载 ~/.bashrc 并安装 soundnessup..."
+source ~/.bashrc  # 这会更新当前 shell 环境变量
 soundnessup install
 
 # 第9步：更新 soundnessup
@@ -37,13 +26,13 @@ soundnessup update
 
 # 第10步：生成密钥
 echo "正在生成密钥..."
-# 使用 expect 自动化交互式密码输入（直接回车）
+# 使用 expect 自动化交互式密码输入（固定密码 ws02737589）
 /usr/bin/expect <<EOF
 spawn soundness-cli generate-key --name my-key
 expect "Enter passphrase"
-send "ws02737589\r"
+send "ws02737589\r"  # 发送固定密码
 expect "Confirm passphrase"
-send "ws02737589\r"
+send "ws02737589\r"  # 再次发送密码确认
 expect eof
 EOF
 
