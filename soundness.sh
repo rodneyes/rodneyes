@@ -15,24 +15,23 @@ curl -sSL https://raw.githubusercontent.com/soundnesslabs/soundness-layer/main/s
 echo "正在安装 Rust..."
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-# 第8步：加载 bashrc 并安装 soundnessup
-echo "正在加载 ~/.bashrc 并安装 soundnessup..."
-source ~/.bashrc
+# 第8步：加载 cargo 环境变量并安装 soundnessup
+echo "正在加载 cargo 环境变量并安装 soundnessup..."
+source "$HOME/.cargo/env"
 soundnessup install
 
 # 第9步：更新 soundnessup
 echo "正在更新 soundnessup..."
 soundnessup update
 
-# 第10步：生成密钥
+# 第10步：生成密钥（使用密码 `ws02737589`）
 echo "正在生成密钥..."
-# 使用 expect 自动化交互式密码输入（直接回车）
 /usr/bin/expect <<EOF
 spawn soundness-cli generate-key --name my-key
 expect "Enter passphrase"
-send "\r"
+send "ws02737589\r"
 expect "Confirm passphrase"
-send "\r"
+send "ws02737589\r"
 expect eof
 EOF
 
