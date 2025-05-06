@@ -36,15 +36,5 @@ soundnessup update
 
 # 第10步：生成密钥
 echo "正在生成密钥..."
-# 使用 expect 自动化交互式密码输入（固定密码 ws02737589）
-/usr/bin/expect <<EOF
-spawn soundness-cli generate-key --name my-key
-expect "Enter passphrase"
-send "ws02737589\r"  # 发送固定密码
-expect "Confirm passphrase"
-send "ws02737589\r"  # 再次发送密码确认
-expect eof
-EOF
+soundness-cli generate-key --name my-key
 
-# 提示用户保存公钥
-echo "脚本执行完成！请保存显示的公钥（public key），后续会用到。"
